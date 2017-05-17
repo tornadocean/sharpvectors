@@ -1,5 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{A1967865-8F3B-4976-A7EC-8F91EAE4C964}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpVectors.Css", "SharpVectorCss\SharpVectors.Css.csproj", "{351B0A6E-2F6B-497A-844B-DCB5A502FB0D}"
@@ -29,56 +31,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GdiTestSvgViewer", "..\Samples\GdiTestSvgViewer\GdiTestSvgViewer.csproj", "{AABE71B6-057B-423C-822A-E9CD2129D2F9}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 14
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs13
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = ..\\Samples\\GdiTestSvgControl\\GdiTestSvgControl.csproj
-		SccProjectTopLevelParentUniqueName1 = SharpVectorsReloaded.sln
-		SccProjectName1 = ../Samples/GdiTestSvgControl
-		SccLocalPath1 = ..\\Samples\\GdiTestSvgControl
-		SccProjectUniqueName2 = ..\\Samples\\GdiTestSvgViewer\\GdiTestSvgViewer.csproj
-		SccProjectTopLevelParentUniqueName2 = SharpVectorsReloaded.sln
-		SccProjectName2 = ../Samples/GdiTestSvgViewer
-		SccLocalPath2 = ..\\Samples\\GdiTestSvgViewer
-		SccProjectUniqueName3 = ..\\Samples\\WpfConverters\\WpfConverters.csproj
-		SccProjectTopLevelParentUniqueName3 = SharpVectorsReloaded.sln
-		SccProjectName3 = ../Samples/WpfConverters
-		SccLocalPath3 = ..\\Samples\\WpfConverters
-		SccProjectUniqueName4 = ..\\Samples\\WpfTestSvgSample\\WpfTestSvgSample.csproj
-		SccProjectTopLevelParentUniqueName4 = SharpVectorsReloaded.sln
-		SccProjectName4 = ../Samples/WpfTestSvgSample
-		SccLocalPath4 = ..\\Samples\\WpfTestSvgSample
-		SccProjectUniqueName5 = ..\\Samples\\WpfW3cSvgTestSuite\\WpfW3cSvgTestSuite.csproj
-		SccProjectTopLevelParentUniqueName5 = SharpVectorsReloaded.sln
-		SccProjectName5 = ../Samples/WpfW3cSvgTestSuite
-		SccLocalPath5 = ..\\Samples\\WpfW3cSvgTestSuite
-		SccProjectUniqueName6 = SharpVectorConverters\\SharpVectors.Converters.csproj
-		SccProjectName6 = SharpVectorConverters
-		SccLocalPath6 = SharpVectorConverters
-		SccProjectUniqueName7 = SharpVectorCore\\SharpVectors.Core.csproj
-		SccProjectName7 = SharpVectorCore
-		SccLocalPath7 = SharpVectorCore
-		SccProjectUniqueName8 = SharpVectorCss\\SharpVectors.Css.csproj
-		SccProjectName8 = SharpVectorCss
-		SccLocalPath8 = SharpVectorCss
-		SccProjectUniqueName9 = SharpVectorDom\\SharpVectors.Dom.csproj
-		SccProjectName9 = SharpVectorDom
-		SccLocalPath9 = SharpVectorDom
-		SccProjectUniqueName10 = SharpVectorModel\\SharpVectors.Model.csproj
-		SccProjectName10 = SharpVectorModel
-		SccLocalPath10 = SharpVectorModel
-		SccProjectUniqueName11 = SharpVectorRenderingGdi\\SharpVectors.Rendering.Gdi.csproj
-		SccProjectName11 = SharpVectorRenderingGdi
-		SccLocalPath11 = SharpVectorRenderingGdi
-		SccProjectUniqueName12 = SharpVectorRenderingWpf\\SharpVectors.Rendering.Wpf.csproj
-		SccProjectName12 = SharpVectorRenderingWpf
-		SccLocalPath12 = SharpVectorRenderingWpf
-		SccProjectUniqueName13 = SharpVectorRuntime\\SharpVectors.Runtime.csproj
-		SccProjectName13 = SharpVectorRuntime
-		SccLocalPath13 = SharpVectorRuntime
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Documentation|Any CPU = Documentation|Any CPU
