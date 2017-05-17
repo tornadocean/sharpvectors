@@ -119,6 +119,139 @@ namespace WpfTestSvgSample
 
         #region Public Methods
 
+        /// <summary>
+        /// 根据类型查找子元素
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="typename"></param>
+        /// <returns></returns>
+        public List<T> GetChildObjects<T>(DependencyObject obj, Type typename) where T : Drawing
+        {
+            DependencyObject child = null;
+            List<T> childList = new List<T>();
+
+            for (int i = 0; i <= VisualTreeHelper.GetChildrenCount(obj) - 1; i++)
+            {
+                child = VisualTreeHelper.GetChild(obj, i);
+
+                if (child is T && (((T)child).GetType() == typename))
+                {
+                    childList.Add((T)child);
+                }
+                childList.AddRange(GetChildObjects<T>(child, typename));
+            }
+            return childList;
+        }
+
+        /// <summary>
+        /// 查找父元素
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static T FindParent<T>(DependencyObject i_dp) where T : DependencyObject
+        {
+            DependencyObject dobj = (DependencyObject)VisualTreeHelper.GetParent(i_dp);
+            if (dobj != null)
+            {
+                if (dobj is T)
+                {
+                    return (T)dobj;
+                }
+                else
+                {
+                    dobj = FindParent<T>(dobj);
+                    if (dobj != null && dobj is T)
+                    {
+                        return (T)dobj;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public Drawing FindChildObject(Drawing d, string name)
+        {
+            var dg = d as DrawingGroup;
+            if (dg == null)
+                return null;
+
+            foreach(Drawing item in dg.Children)
+            {
+                var gName = item.GetValue(FrameworkElement.NameProperty);
+                if(name.CompareTo(gName.ToString()) == 0)
+                {
+                    return item;
+                }
+                else
+                {
+                    var itemSub =  FindChildObject(item, name);
+                    if(itemSub != null)
+                    {
+                        return itemSub;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private System.Timers.Timer tmBink = new System.Timers.Timer();
+
+        private void Settimer()
+        {
+            tmBink.Interval = 500;
+            tmBink.Elapsed += TmBink_Elapsed;
+            tmBink.Start();
+        }
+
+        private Drawing drValve = null;
+        private Drawing drText = null;
+        private int nBlink = 0;
+        private void TmBink_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+
+            var dgr = drValve as GeometryDrawing;
+            if (dgr == null)
+                return;
+
+            dgr.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (nBlink++ % 2 == 0)
+                {
+                    dgr.Brush = Brushes.Blue;
+                }
+                else
+                {
+                    dgr.Brush = Brushes.Red;
+                }
+
+                try
+                {
+                    var drt = drText as GlyphRunDrawing;
+                   // drt.GlyphRun = new GlyphRun();
+                    
+                }
+                catch (Exception ex)
+                {
+                    var msg = ex.Message;
+                }
+            }));
+
+          
+           
+        }
+
+        static public T DeepCopyDrawing<T>(T imageItem) where T : Drawing
+        {
+            var stream = new System.IO.MemoryStream();
+            System.Windows.Markup.XamlWriter.Save(imageItem, stream);
+            stream.Seek(0, SeekOrigin.Begin);
+            return (T)System.Windows.Markup.XamlReader.Load(stream);
+        }
+
         public bool LoadDocument(string svgFilePath)
         {
             if (String.IsNullOrEmpty(svgFilePath) || !File.Exists(svgFilePath))
@@ -149,8 +282,88 @@ namespace WpfTestSvgSample
                     _fileReader.SaveZaml = false;
 
                     DrawingGroup drawing = _fileReader.Read(svgFilePath, workingDir);
+                    //SharpVectors.Dom.Svg.SvgDocument sdoc = new SharpVectors.Dom.Svg.SvgDocument();
+                    var child = drawing.Children[0] as DrawingGroup;
+                    //gd.SetValue(FrameworkElement.NameProperty, "gd1");
+                    var name = child.GetValue(FrameworkElement.NameProperty);
+                    //var subchild = child.Children[0] as DrawingGroup;
+                    //var val1 = subchild.Children[0];
+
+                   
+                    
                     if (drawing != null)
                     {
+                        try
+                        {
+                            var dgFind = FindChildObject(drawing, "shape10_4");
+                            if (dgFind != null)
+                            {
+                                var dg = dgFind as DrawingGroup;
+                                var gdr = dg.Children[0] as GeometryDrawing;
+                                gdr.Brush = Brushes.Blue;
+                                drValve = gdr;
+                                Settimer();
+                            }
+
+                            dgFind = FindChildObject(drawing, "shape33_39");
+                            if(dgFind != null)
+                            {
+                                var dg = dgFind as DrawingGroup;
+                                var dgr = dg.Children[1] as DrawingGroup;
+                                var dgr2 = dgr.Children[0] as DrawingGroup;
+                                var dgr3 = dgr2.Children[0] as GlyphRunDrawing;
+                                //var drun = dgr3.GlyphRun;
+                                //var drun = dgr3.GlyphRun;
+                                //var newRun = new GlyphRun(
+                                //    drun.GlyphTypeface,
+                                //    drun.BidiLevel,
+                                //    drun.IsSideways,
+                                //    drun.FontRenderingEmSize,
+                                //   new ushort[] { 43, 72, 79, 79, 82, 3, 58, 82, 85, 79, 71 },
+                                //    drun.BaselineOrigin,
+                                //    new double[]{
+                                //        9.62666666666667, 7.41333333333333, 2.96,
+                                //        2.96, 7.41333333333333, 3.70666666666667,
+                                //        12.5866666666667, 7.41333333333333,
+                                //        4.44, 2.96, 7.41333333333333},
+                                //    null, 
+                                //    null,
+                                //    null, 
+                                //    null, 
+                                //    null, 
+                                //    null);
+
+                                //GlyphRun theGlyphRun = new GlyphRun(
+                                //    drun.GlyphTypeface,
+                                //    0,
+                                //    false,
+                                //    13.333333333333334,
+                                //    new ushort[] { 43, 72, 79, 79, 82, 3, 58, 82, 85, 79, 71 },
+                                //    new Point(0, 12.29),
+                                //    new double[]{
+                                //        9.62666666666667, 7.41333333333333, 2.96,
+                                //        2.96, 7.41333333333333, 3.70666666666667,
+                                //        12.5866666666667, 7.41333333333333,
+                                //        4.44, 2.96, 7.41333333333333},
+                                //    null,
+                                //    null,
+                                //    null,
+                                //    null,
+                                //    null,
+                                //    null
+                                //    );
+
+                                //dgr3.GlyphRun = newRun;
+                                //dgr3.GlyphRun.Characters = "test".ToCharArray();
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            var msg = ex.Message;
+                        }
+              
+                        //var listChilds = GetChildObjects<DrawingGroup>(drawing, typeof(DrawingGroup));
+
                         svgViewer.RenderDiagrams(drawing);
 
                         //zoomSlider.Value = currentZoom;
