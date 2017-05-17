@@ -228,6 +228,8 @@ namespace WpfTestSvgSample
                     dgr.Brush = Brushes.Red;
                 }
 
+                
+
                 try
                 {
                     var drt = drText as GlyphRunDrawing;
@@ -299,6 +301,23 @@ namespace WpfTestSvgSample
                             if (dgFind != null)
                             {
                                 var dg = dgFind as DrawingGroup;
+
+                                ////tf.Transform(new Point(20, 0));
+                                ////dg.Transform = tf;
+                                MatrixTransform mxTran = new MatrixTransform();
+                                var mx = dg.Transform.Value;
+                                //mx.RotateAt(15, mx.OffsetX, mx.OffsetY);
+                                mx.OffsetX += 10;
+                                mx.OffsetY -= 10;
+                                mxTran.Matrix = mx;
+                                
+                                //TranslateTransform trTran = new TranslateTransform(200, -500);
+                                //RotateTransform roTran = new RotateTransform(-30, 0, 0);
+                                TransformGroup trGroup = new TransformGroup();
+                               // trGroup.Children.Add(roTran);
+                                trGroup.Children.Add(mxTran);
+                                dg.Transform = trGroup;
+
                                 var gdr = dg.Children[0] as GeometryDrawing;
                                 gdr.Brush = Brushes.Blue;
                                 drValve = gdr;
